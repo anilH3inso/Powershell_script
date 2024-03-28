@@ -26,7 +26,7 @@ Execution
 First you have to create folders -- Backup and Restore
 To download and execute defend.ps1 , run the commands below:
 
-`wget https://github.com/anilH3inso/defend.ps1.git`  
+`git clone https://github.com/anilH3inso/defend.ps1.git`  
 `.\defend.ps1 installgpg`  
 `.\defend.ps1 setupgpg`  
 `.\defend.ps1 Backup` 
