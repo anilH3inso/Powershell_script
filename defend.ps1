@@ -23,16 +23,13 @@ function Backup {
     $backupFile = ".\Backup"
     # Path to the gpg executable
     $gpgPath = "C:\Program Files (x86)\GnuPG\bin\gpg.exe"
-    
     Write-Output "Backing up files..."
-    
     # Iterate through files in source folder
     Get-ChildItem $sourceFile | ForEach-Object {
         $outputFile = "$backupFile\$($_.Name).gpg"
         # Encrypt each file using GPG and store in the backup folder
         & $gpgPath --output $outputFile --encrypt --recipient anil.budthapa@cqumail.com $_.FullName
     }
-    
     Write-Output "Backup completed."
 }
 
@@ -40,22 +37,17 @@ function Backup {
 function Restore {
     # Prompt user to enter backup folder path
     $backupFile = ".\Backup"
-    
     # Prompt user to enter restore folder path
     $restoredFile =".\Restore"
-    
     # Path to the gpg executable
     $gpgPath = "C:\Program Files (x86)\GnuPG\bin\gpg.exe"
-    
     Write-Output "Restoring files..."
-    
     # Iterate through files in backup folder
     Get-ChildItem $backupFile | ForEach-Object {
         $outputFile = "$restoredFile\$($_.BaseName)"
         # Decrypt each file using GPG and save in the restored folder
         & $gpgPath --output $outputFile --decrypt $_.FullName
     }
-    
     Write-Output "Restoration completed."
 }
 
