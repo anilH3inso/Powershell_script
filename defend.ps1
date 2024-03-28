@@ -28,7 +28,7 @@ function Backup {
     Get-ChildItem $sourceFile | ForEach-Object {
         $outputFile = "$backupFile\$($_.Name).gpg"
         # Encrypt each file using GPG and store in the backup folder
-        & $gpgPath --output $outputFile --encrypt --recipient anil.budthapa@cqumail.com $_.FullName
+        & $gpgPath --output $outputFile --encrypt --recipient hypemsltech@gmail.com $_.FullName
     }
     Write-Output "Backup completed."
 }
