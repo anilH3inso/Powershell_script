@@ -1,16 +1,15 @@
 # This is window Powershell script called defend.ps1
-# madeby Anil Budthapa and Tanisha Gill
+# madeby Anil Budthapa.
 
 # Function to install gpg4win using Chocolatey
 Function InstallGPG {
-    Write-Output "Installing gpg4win by usig Chocolatey as in assessment topic 1 note"
-    choco install gpg4win
+    Write-Output "Installing gpg4win using Chocolatey..."
+    choco install gpg4win -y
 }
 
 # Function to set up GPG key
 Function SetupGPG {
     Write-Output "Setting up GPG key..."
-    & 'C:\Program Files (x86)\GnuPG\bin\gpg.exe' -help
     & 'C:\Program Files (x86)\GnuPG\bin\gpg.exe' --generate-key
     # Additional prompts may be required to input details like name and email
 }
@@ -24,11 +23,15 @@ function Backup {
     # Path to the gpg executable
     $gpgPath = "C:\Program Files (x86)\GnuPG\bin\gpg.exe"
     Write-Output "Backing up files..."
+
+    # Prompt user for recipient email
+    $recipientEmail = Read-Host "Enter the recipient's email for encryption"
+
     # Iterate through files in source folder
     Get-ChildItem $sourceFile | ForEach-Object {
         $outputFile = "$backupFile\$($_.Name).gpg"
         # Encrypt each file using GPG and store in the backup folder
-        & $gpgPath --output $outputFile --encrypt --recipient hypemsltech@gmail.com $_.FullName
+        & $gpgPath --output $outputFile --encrypt --recipient $recipientEmail $_.FullName
     }
     Write-Output "Backup completed."
 }
@@ -38,7 +41,7 @@ function Restore {
     # Prompt user to enter backup folder path
     $backupFile = ".\Backup"
     # Prompt user to enter restore folder path
-    $restoredFile =".\Restore"
+    $restoredFile = ".\Restore"
     # Path to the gpg executable
     $gpgPath = "C:\Program Files (x86)\GnuPG\bin\gpg.exe"
     Write-Output "Restoring files..."
